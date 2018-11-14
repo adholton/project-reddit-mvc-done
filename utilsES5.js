@@ -1,7 +1,7 @@
 var Collection = function (config) {
   var models = []
 
-  var init = functin () {
+  var init = function () {
     if (config) {
       models.push(config)
     }
