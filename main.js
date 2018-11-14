@@ -29,7 +29,7 @@ var ProjectReddit = function () {
 
       $posts.append('<div class="post">'
         + '<a href="#" class="remove">remove</a> ' + '<a href="#" class="show-comments">comments</a> ' + post.get('text') +
-        commentsContainer + ' <div> Posted By: <strong>' + post.get('name') + '</strong></div></div>');
+        commentsContainer + ' <div> Posted By: <strong> ' + post.get('name') + '</strong></div></div>');
     }
   }
 
@@ -40,12 +40,9 @@ var ProjectReddit = function () {
       // the current post in the iteration
       var post = posts.models[i];
 
-      // index of the current post in the posts array
-      var index = posts.models.indexOf(post);
-
       // finding the "post" element in the page that is equal to the
       // current post we're iterating on
-      var $post = $('.posts').find('.post').eq(index);
+      var $post = $('.posts').find('.post').eq(i);
 
       // iterate through each comment in our post's comments array
       for (var j = 0; j < post.get('comments').length; j += 1) {
