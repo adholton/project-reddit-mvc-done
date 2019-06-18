@@ -72,7 +72,8 @@ var Model = function (config) {
   return {
     set: set,
     get: get,
-    change: change
+    change: change, 
+    getAttributes: getAttributes
   }
 };
 
