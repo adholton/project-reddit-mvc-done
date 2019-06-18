@@ -22,14 +22,13 @@ var ProjectReddit = function () {
     $posts.empty();
 
     for (var i = 0; i < posts.models.length; i += 1) {
-      var post = posts.models[i];
+      var postModel = posts.models[i];
 
-      var commentsContainer = '<div class="comments-container">' + '<div class=comments-list></div>' +
-      '<input type="text" class="comment-name" placeholder="Comment Text">' + '<input type="text" class="comment-user" placeholder="User Name"><button class="btn btn-primary add-comment">Post Comment</button> </div>';
+      var postTemplate = Handlebars.compile($('#post-template').html());
 
-      $posts.append('<div class="post">'
-        + '<a href="#" class="remove">remove</a> ' + '<a href="#" class="show-comments">comments</a> ' + post.get('text') +
-        commentsContainer + ' <div> Posted By: <strong> ' + post.get('name') + '</strong></div></div>');
+      var postView = View(postModel, postTemplate);
+
+      $posts.append(postView.render());
     }
   }
 
@@ -38,23 +37,22 @@ var ProjectReddit = function () {
 
     for (var i = 0; i < posts.models.length; i += 1) {
       // the current post in the iteration
-      var post = posts.models[i];
+      var postModel = posts.models[i];
 
       // finding the "post" element in the page that is equal to the
       // current post we're iterating on
       var $post = $('.posts').find('.post').eq(i);
 
       // iterate through each comment in our post's comments array
-      for (var j = 0; j < post.get('comments').length; j += 1) {
+      for (var j = 0; j < postModel.get('comments').length; j += 1) {
         // the current comment in the iteration
-        var comment = post.get('comments')[j];
+        var commentModel = postModel.get('comments')[j];
 
-        // append the comment to the post we wanted to comment on
-        $post.find('.comments-list').append(
-          '<div class="comment">' + comment.text +
-          'Posted By: <strong>' + comment.name + '</strong><a class="remove-comment"><i class="fa fa-times" aria-hidden="true"></i></a>' +
-          '</div>'
-        );
+        var postTemplate = Handlebars.compile($('#comment-template').html());
+
+        var commentView = View(commentModel, postTemplate);
+
+        $post.find('.comments-list').append(commentView.render())
       };
     };
   };
@@ -74,13 +72,13 @@ var ProjectReddit = function () {
   }
 
   var createComment = function (text, name, postIndex) {
-    var comment = { text: text, name: name };
+    var commentModel = Model({ text: text, name: name });
 
     var currentComments = posts.models[postIndex].get('comments');
 
     var tempComments = [];
 
-    tempComments.push(comment);
+    tempComments.push(commentModel);
 
     var comments = currentComments.concat(tempComments)
 
@@ -102,7 +100,7 @@ var ProjectReddit = function () {
 
     // remove the comment from the comments array on the correct post object
     posts.models[postIndex].get('comments').splice(commentIndex, 1);
-  }
+  };
 
   return {
     posts: posts,

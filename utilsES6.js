@@ -51,6 +51,8 @@ const Model = (config) => {
     }
   };
 
+  const getAttributes = () => attributes;
+
   const get = (prop) => attributes[prop]
   const change = (func) => changeCallback = func;
 
@@ -59,6 +61,19 @@ const Model = (config) => {
   return {
     set,
     get,
-    change
+    change,
+    getAttributes
   }
+};
+
+const View = (model, template) => {
+  const render = function() {
+    var attrs = model.getAttributes();
+
+    return template(attrs);
+  };
+
+  return {
+    render
+  };
 };

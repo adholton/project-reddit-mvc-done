@@ -55,12 +55,16 @@ var Model = function (config) {
     }
   };
 
-  var get = function (prop){
+  var get = function (prop) {
     return attributes[prop]
   };
 
-  var change = function(func) {
+  var change = function (func) {
     return changeCallback = func;
+  }
+
+  var getAttributes = function () {
+    return attributes;
   }
 
   init()
@@ -70,4 +74,16 @@ var Model = function (config) {
     get: get,
     change: change
   }
+};
+
+var View = function (model, template) {
+  var render = function() {
+    var attrs = model.getAttributes();
+
+    return template(attrs);
+  };
+
+  return {
+    render: render
+  };
 };

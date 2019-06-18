@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.js"></script>
     <script src="https://use.fontawesome.com/9bb473da46.js"></script>
   <title></title>
 </head>
@@ -34,6 +35,34 @@
 
     </div>
   </div>
+
+  <script id="post-template" type="text/x-handlebars-template">
+    <div class="post">
+      <a href="#" class="remove">remove</a>
+      <a href="#" class="show-comments">comments</a> {{text}}
+
+      <div class="comments-container">
+        <div class=comments-list>
+        </div>
+        <input type="text" class="comment-name" placeholder="Comment Text">
+        <input type="text" class="comment-user" placeholder="User Name">
+        <button class="btn btn-primary add-comment">Post Comment</button>
+      </div>
+
+      <div> Posted By: <strong> {{name}}</strong>
+      </div>
+    </div>
+  </script>
+
+  <script id="comment-template" type="text/x-handlebars-template">
+    <div class="comment"> {{ text }}
+      Posted By: <strong> {{ name }}</strong>
+      <a class="remove-comment">
+        <i class="fa fa-times" aria-hidden="true">
+        </i>
+      </a>
+    </div>
+  </script>
 
   <script src="utilsES6.js"></script>
   <script src="main.js"></script>
